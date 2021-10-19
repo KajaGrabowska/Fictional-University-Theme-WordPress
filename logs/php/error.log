@@ -6,3 +6,14 @@ Stack trace:
 #2 C:\Users\Kaja\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php(327): WP_Hook->apply_filters('', Array)
 #3 C:\Users\Kaja\Local Sites\fictional-university\app\public\wp-includes\plugin.php(518): WP_Hook->do_action(Array)
 #4 C:\Users\Kaja\Local Sites\fictional-university\app\public\wp-includes\class-wp-query.php(1784): do_action_ref_array('pre_ge in C:\Users\Kaja\Local Sites\fictional-university\app\public\wp-includes\class-wp-query.php on line 1752
+[18-Oct-2021 17:14:41 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function pageBanner(), 0 passed in C:\Users\Kaja\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\single-professor.php on line 7 and exactly 1 expected in C:\Users\Kaja\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php:3
+Stack trace:
+#0 C:\Users\Kaja\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\single-professor.php(7): pageBanner()
+#1 C:\Users\Kaja\Local Sites\fictional-university\app\public\wp-includes\template-loader.php(106): include('C:\\Users\\Kaja\\L...')
+#2 C:\Users\Kaja\Local Sites\fictional-university\app\public\wp-blog-header.php(19): require_once('C:\\Users\\Kaja\\L...')
+#3 C:\Users\Kaja\Local Sites\fictional-university\app\public\index.php(17): require('C:\\Users\\Kaja\\L...')
+#4 {main}
+  thrown in C:\Users\Kaja\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 3
+[18-Oct-2021 17:39:19 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\Users\Kaja\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 31
+[18-Oct-2021 17:39:20 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\Users\Kaja\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 31
+[18-Oct-2021 17:39:21 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\Users\Kaja\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 31

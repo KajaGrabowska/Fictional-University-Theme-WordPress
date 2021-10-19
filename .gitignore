@@ -1,2 +1,2 @@
 logs/php/error.log
-error.log
+*.log
