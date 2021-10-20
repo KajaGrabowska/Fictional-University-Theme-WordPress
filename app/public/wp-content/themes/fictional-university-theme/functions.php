@@ -79,5 +79,14 @@ function university_adjust_queries($query)
 add_action('pre_get_posts', 'university_adjust_queries');
 
 
+//function for google maps API, can't use because I don't want to enter my billing info
+/* function universityMapKey($api) {
+    $api['key'] = 'AIzaSyCNUCBEax5YvcwiHY32QUSXBO8tUSKcl6w';
+    return $api;
+}
+
+add_filter('acf/fields/google_map/api', 'universityMapKey'); */
+
+
 
 ?>
