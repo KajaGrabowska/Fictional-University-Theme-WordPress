@@ -17,9 +17,7 @@ pageBanner(array(
       <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
       <?php the_field('map_location'); ?>
       
-    <?php }
-    echo paginate_links();
-    ?>
+    <?php }?>
   </ul>
 </div>
 
