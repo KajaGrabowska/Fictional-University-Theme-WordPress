@@ -1,14 +1,17 @@
-import $ from 'jquery';   //$ is short for jquery
+import $ from "jquery"; //$ is short for jquery
 
 class Search {
   // 1. describe and create/initiate our object
   constructor() {
+    this.resultsDiv = $("#search-overlay__results");
     this.openButton = $(".js-search-trigger");
     this.closeButton = $(".search-overlay__close");
     this.searchOverlay = $(".search-overlay");
     this.searchField = $("#search-term");
-    this.events();    //makes sure the events are being listened to as soon as the page loads
+    this.events(); //makes sure the events are being listened to as soon as the page loads
     this.isOverlayOpen = false;
+    this.isSpinnerVisible = false;
+    this.previousSearchValue;
     this.typingTimer;
   }
 
@@ -17,18 +20,36 @@ class Search {
     this.openButton.on("click", this.openOverlay.bind(this));
     this.closeButton.on("click", this.closeOverlay.bind(this));
     $(document).on("keydown", this.keyPressDispatcher.bind(this));
-    this.searchField.on("keydown", this.typingLogic.bind(this));
+    this.searchField.on("keyup", this.typingLogic.bind(this));
   }
 
   // 3. methods
   typingLogic() {
-    clearTimeout(this.typingTimer);
-    this.typingTimer = setTimeout(function () {console.log("this is a timeout test.");}, 2000);
+    if (this.searchField.val() != this.previousSearchValue) {
+      clearTimeout(this.typingTimer);
+
+      if (this.searchField.val()) {
+        if (!this.isSpinnerVisible) {
+          this.resultsDiv.html('<div class="spinner-loader"></div>');
+          this.isSpinnerVisible = true;
+        }
+        this.typingTimer = setTimeout(this.getResults.bind(this), 2000);
+      } else {
+        this.resultsDiv.html("");
+        this.isSpinnerVisible = false;
+      }
+    }
+
+    this.previousSearchValue = this.searchField.val();
   }
 
+  getResults() {
+    this.resultsDiv.html("Imagine real search results here");
+    this.isSpinnerVisible = false;
+  }
 
   keyPressDispatcher(event) {
-    if (event.keyCode == 83 && !this.isOverlayOpen) {
+    if (event.keyCode == 83 && !this.isOverlayOpen && !$("input, textarea").is(':focus')) {
       this.openOverlay();
     }
 
@@ -36,7 +57,7 @@ class Search {
       this.closeOverlay();
     }
   }
-  
+
   openOverlay() {
     this.searchOverlay.addClass("search-overlay--active");
     $("body").addClass("body-no-scroll");
@@ -50,4 +71,4 @@ class Search {
   }
 }
 
-export default Search; 
+export default Search;
