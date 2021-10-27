@@ -44,12 +44,21 @@ class Search {
   }
 
   getResults() {
-    this.resultsDiv.html("Imagine real search results here");
-    this.isSpinnerVisible = false;
+    $.getJSON(
+      "http://fictional-university.local/wp-json/wp/v2/posts?search=" +
+        this.searchField.val(),
+      function (posts) {
+        alert(posts[0].title.rendered);
+      }
+    );
   }
 
   keyPressDispatcher(event) {
-    if (event.keyCode == 83 && !this.isOverlayOpen && !$("input, textarea").is(':focus')) {
+    if (
+      event.keyCode == 83 &&
+      !this.isOverlayOpen &&
+      !$("input, textarea").is(":focus")
+    ) {
       this.openOverlay();
     }
 
