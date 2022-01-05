@@ -1,3 +1,5 @@
-logs/php/error.log
 *.log
 node_modules
+logs/nginx/error.log
+app/sql/local.sql
+logs/php/error.log
