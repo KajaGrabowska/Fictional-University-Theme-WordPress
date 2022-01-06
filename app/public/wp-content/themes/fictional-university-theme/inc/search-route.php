@@ -1,5 +1,7 @@
 <?php
 
+//custom search route for Search Function 
+
 add_action('rest_api_init', 'universityRegisterSearch');
 
 function universityRegisterSearch()
@@ -22,7 +24,7 @@ function universitySearchResults($data)
     'professors' => array(),
     'programs' => array(),
     'events' => array(),
-    'campuses' => array()
+    'campuses' => array() //arrays of results depended on post type
   );
 
   while ($mainQuery->have_posts()) {
@@ -68,7 +70,7 @@ function universitySearchResults($data)
       } else {
         $description = wp_trim_words(get_the_content(), 18);
       }
-      
+
       array_push($results['events'], array(
         'title' => get_the_title(),
         'permalink' => get_the_permalink(),

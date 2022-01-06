@@ -10,10 +10,11 @@ function university_custom_rest() {
 
 add_action('rest_api_init', 'university_custom_rest');
 
+//function that makes page banner dynamic and easily adjustable from different pages
 function pageBanner($args = NULL)   //NULL makes the argument optional, not required
 {
     if (!$args['title']) {
-        $args['title'] = get_the_title();
+        $args['title'] = get_the_title(); //sets the title for that post's title
     }
 
     if (!$args['subtitle']) {
@@ -55,6 +56,7 @@ function university_files()
 
 add_action('wp_enqueue_scripts', 'university_files');
 
+//function to add some features to the theme
 function university_features()
 {
     add_theme_support('title-tag');
@@ -66,6 +68,7 @@ function university_features()
 
 add_action('after_setup_theme', 'university_features');
 
+//function to customize wordpress queries
 function university_adjust_queries($query)
 {
     if (!is_admin() and is_post_type_archive('campus') and is_main_query()) {

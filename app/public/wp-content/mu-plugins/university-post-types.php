@@ -1,5 +1,7 @@
 <?php
 
+//Registering Custom Post Types
+
 function university_post_types() {
 
     // Campus Post Type

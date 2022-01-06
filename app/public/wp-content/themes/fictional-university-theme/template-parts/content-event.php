@@ -1,3 +1,5 @@
+<!-- template for events  -->
+
 <div class="event-summary">
   <a class="event-summary__date t-center" href="#">
     <span class="event-summary__month">
