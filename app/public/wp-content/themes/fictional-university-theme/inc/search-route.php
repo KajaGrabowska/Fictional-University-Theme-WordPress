@@ -50,7 +50,8 @@ function universitySearchResults($data)
     if (get_post_type() == 'program') {
       array_push($results['programs'], array(
         'title' => get_the_title(),
-        'permalink' => get_the_permalink()
+        'permalink' => get_the_permalink(),
+        'id' => get_the_id()
       ));
     }
 
@@ -81,31 +82,38 @@ function universitySearchResults($data)
     }
   }
 
-  //custom query to include results with relationships to search term
-  $programRelationshipQuery = new WP_Query(array(
-    'post_type' => 'professor',
-    'meta_query' => array(
-      array(
+  if ($results['programs']) {
+    $programsMetaQuery = array('relation' => 'OR');
+
+    //loops through each item in the results array and adds on to programs meta query array 
+    foreach ($results['programs'] as $item) {
+      array_push($programsMetaQuery, array(
         'key' => 'related_programs', //the name of the advanced custom field that we want to look within
         'compare' => 'LIKE',  //compare method
-        'value' => '"54"'
-      )
-    )
-  ));
-
-  while($programRelationshipQuery->have_posts()) {
-    $programRelationshipQuery->the_post();
-
-    if (get_post_type() == 'professor') {
-      array_push($results['professors'], array(
-        'title' => get_the_title(),
-        'permalink' => get_the_permalink(),
-        'image' => get_the_post_thumbnail_url(0, 'professorLandscape') // zero means the current post
+        'value' => '"' . $item['id'] . '"'
       ));
     }
-  }
 
-  $results['professors'] = array_values(array_unique($results['professors'], SORT_REGULAR)); //array_unique removes duplicate items from an array; array_values removed index numbers from the json results file
+    //custom query to include results with relationships to search term
+    $programRelationshipQuery = new WP_Query(array(
+      'post_type' => 'professor',
+      'meta_query' => $programsMetaQuery
+    ));
+
+    while ($programRelationshipQuery->have_posts()) {
+      $programRelationshipQuery->the_post();
+
+      if (get_post_type() == 'professor') {
+        array_push($results['professors'], array(
+          'title' => get_the_title(),
+          'permalink' => get_the_permalink(),
+          'image' => get_the_post_thumbnail_url(0, 'professorLandscape') // zero means the current post
+        ));
+      }
+    }
+
+    $results['professors'] = array_values(array_unique($results['professors'], SORT_REGULAR)); //array_unique removes duplicate items from an array; array_values removed index numbers from the json results file
+  }
 
   return $results;
 }
