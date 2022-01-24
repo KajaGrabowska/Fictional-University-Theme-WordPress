@@ -144,6 +144,7 @@ function ourLoginCSS() {
     wp_enqueue_style('university_extra_styles', get_theme_file_uri('/build/index.css'));
 }
 
+// Replaces "Powered by Wordpress" on the login page with the website actual name
 add_filter('login_headertitle', 'ourLoginTitle');
 
 function ourLoginTitle() {
