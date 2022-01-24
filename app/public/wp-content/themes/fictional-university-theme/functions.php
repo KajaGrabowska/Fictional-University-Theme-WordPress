@@ -2,9 +2,12 @@
 
 require get_theme_file_path('/inc/search-route.php');
 
-function university_custom_rest() {
+function university_custom_rest()
+{
     register_rest_field('post', 'authorName', array(
-        'get_callback' => function() {return get_the_author();}
+        'get_callback' => function () {
+            return get_the_author();
+        }
     ));
 }
 
@@ -22,13 +25,13 @@ function pageBanner($args = NULL)   //NULL makes the argument optional, not requ
     }
 
     if (!$args['photo']) {
-        if (get_field('page_banner_background_image') AND !is_archive() AND !is_home()) {
+        if (get_field('page_banner_background_image') and !is_archive() and !is_home()) {
             $args['photo'] = get_field('page_banner_background_image')['sizes']['pageBanner'];
         } else {
             $args['photo'] = get_theme_file_uri('/images/ocean.jpg');
         }
     }
-    
+
 ?>
     <div class="page-banner">
         <div class="page-banner__bg-image" style="background-image: url(<?php echo $args['photo'] ?>);"></div>
@@ -74,7 +77,7 @@ function university_adjust_queries($query)
     if (!is_admin() and is_post_type_archive('campus') and is_main_query()) {
         $query->set('posts_per_page', -1);
     }
-    
+
     if (!is_admin() and is_post_type_archive('program') and is_main_query()) {
         $query->set('orderby', 'title');
         $query->set('order', 'ASC');
@@ -98,6 +101,31 @@ function university_adjust_queries($query)
 }
 
 add_action('pre_get_posts', 'university_adjust_queries');
+
+
+//Redirect subscriber accounts out of admin and onto homepage
+add_action('admin_init', 'redirectSubsToFrontend');
+
+function redirectSubsToFrontend() {
+    $ourCurrentUser = wp_get_current_user();
+    
+    if(count($ourCurrentUser->roles) == 1 AND $ourCurrentUser->roles[0] == 'subscriber') {
+        wp_redirect(site_url('/'));
+        exit;            
+    }
+}
+
+//Function prevents admin bar from showing to subscribers 
+add_action('wp_loaded', 'noSubsAdminBar');
+
+function noSubsAdminBar()
+{
+    $ourCurrentUser = wp_get_current_user();
+
+    if (count($ourCurrentUser->roles) == 1 and $ourCurrentUser->roles[0] == 'subscriber') {
+        show_admin_bar(false);
+    }
+}
 
 
 //function for google maps API, can't use because I don't want to enter my billing info
