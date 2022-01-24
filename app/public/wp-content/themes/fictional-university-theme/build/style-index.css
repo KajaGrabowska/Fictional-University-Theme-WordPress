@@ -500,17 +500,31 @@ body.login .button-primary:hover {
 }
 
 body.login {
-  background-color: #FAF0CA;
+  background-image: url(images/entrance.0aa131ce.jpg);
+  background-position: center;
+  background-size: contain;
 }
 
 .login h1 a {
-  color: #0D3B66;
-  font-size: 30px;
-  font-weight: 300;
+  color: white;
+  font-size: 37px;
+  font-weight: 500;
   background-image: none;
   width: auto;
   height: auto;
   text-indent: 0;
+}
+
+body.login div#login p#nav a {
+  color: #fff;
+}
+
+body.login div#login p#backtoblog a {
+  color: #fff;
+}
+
+body.login div#login a.privacy-policy-link {
+  color: #fff;
 }
 
 .btn {

@@ -1,5 +1,6 @@
 /* Customize Login Screen */
 
+
 body.login .button-primary {
   background-color: $darkOrange;
   border-color: scale-color($darkOrange, $lightness: -10%);
@@ -17,15 +18,29 @@ body.login .button-primary:hover {
 }
 
 body.login {
-  background-color: $beige;
+  background-image: url('/images/entrance.jpg');
+  background-position: center;
+  background-size: contain; 
 }
 
 .login h1 a {
-  color: $mainBlue;
-  font-size: 30px;
-  font-weight: 300;
+  color: white;
+  font-size: 37px;
+  font-weight: 500;
   background-image: none;
   width: auto;
   height: auto;
   text-indent: 0;
+}
+
+body.login div#login p#nav a {
+  color: #fff;
+}
+
+body.login div#login p#backtoblog a {
+  color: #fff;
+}
+
+body.login div#login a.privacy-policy-link {
+  color: #fff;
 }
