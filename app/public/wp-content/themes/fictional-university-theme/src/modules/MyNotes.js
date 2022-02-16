@@ -9,6 +9,7 @@ class MyNotes {
     $(".delete-note").on("click", this.deleteNote);
     $(".edit-note").on("click", this.editNote.bind(this));
     $(".update-note").on("click", this.updateNote.bind(this));
+    $(".submit-note").on("click", this.createNote.bind(this));
   }
 
   // Methods will go here
@@ -70,9 +71,9 @@ class MyNotes {
     var thisNote = $(event.target).parents("li");
 
     var ourUpdatedPost = {
-      'title': thisNote.find(".note-title-field").val(), //accesses title input field
-      'content': thisNote.find(".note-body-field").val() //accesses content input field
-    }
+      title: thisNote.find(".note-title-field").val(), //accesses title input field
+      content: thisNote.find(".note-body-field").val(), //accesses content input field
+    };
 
     $.ajax({
       beforeSend: (xhr) => {
@@ -84,6 +85,34 @@ class MyNotes {
       data: ourUpdatedPost,
       success: (response) => {
         this.makeNoteReadOnly(thisNote);
+        console.log("Congrats");
+        console.log(response);
+      },
+      error: (response) => {
+        console.log("Sorry");
+        console.log(response);
+      },
+    });
+  }
+
+  createNote(event) {
+    var ourNewPost = {
+      'title': $(".new-note-title").val(), //gets the title value user inputed 
+      'content': $(".new-note-body").val(), //gets the content value user inputed
+      'status': 'publish'
+    };
+
+    $.ajax({
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader("X-WP-Nonce", universityData.nonce);
+      },
+      url:
+        universityData.root_url + "/wp-json/wp/v2/note/",
+      type: "POST",
+      data: ourNewPost,
+      success: (response) => {
+        $(".new-note-title, .new-note-body").val(''); //clears the input fields 
+        $('<li>Imagine real data here</li>').prependTo("#my-notes").hide().slideDown();
         console.log("Congrats");
         console.log(response);
       },

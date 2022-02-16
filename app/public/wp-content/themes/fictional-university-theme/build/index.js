@@ -5853,6 +5853,7 @@ class MyNotes {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(".delete-note").on("click", this.deleteNote);
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(".edit-note").on("click", this.editNote.bind(this));
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(".update-note").on("click", this.updateNote.bind(this));
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(".submit-note").on("click", this.createNote.bind(this));
   } // Methods will go here
 
 
@@ -5903,9 +5904,9 @@ class MyNotes {
   updateNote(event) {
     var thisNote = jquery__WEBPACK_IMPORTED_MODULE_0___default()(event.target).parents("li");
     var ourUpdatedPost = {
-      'title': thisNote.find(".note-title-field").val(),
+      title: thisNote.find(".note-title-field").val(),
       //accesses title input field
-      'content': thisNote.find(".note-body-field").val() //accesses content input field
+      content: thisNote.find(".note-body-field").val() //accesses content input field
 
     };
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
@@ -5917,6 +5918,35 @@ class MyNotes {
       data: ourUpdatedPost,
       success: response => {
         this.makeNoteReadOnly(thisNote);
+        console.log("Congrats");
+        console.log(response);
+      },
+      error: response => {
+        console.log("Sorry");
+        console.log(response);
+      }
+    });
+  }
+
+  createNote(event) {
+    var ourNewPost = {
+      'title': jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-title").val(),
+      //gets the title value user inputed 
+      'content': jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-body").val(),
+      //gets the content value user inputed
+      'status': 'publish'
+    };
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+      beforeSend: xhr => {
+        xhr.setRequestHeader("X-WP-Nonce", universityData.nonce);
+      },
+      url: universityData.root_url + "/wp-json/wp/v2/note/",
+      type: "POST",
+      data: ourNewPost,
+      success: response => {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-title, .new-note-body").val(''); //clears the input fields 
+
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('<li>Imagine real data here</li>').prependTo("#my-notes").hide().slideDown();
         console.log("Congrats");
         console.log(response);
       },
