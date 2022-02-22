@@ -99,7 +99,7 @@ class MyNotes {
     var ourNewPost = {
       title: $(".new-note-title").val(), //gets the title value user inputed
       content: $(".new-note-body").val(), //gets the content value user inputed
-      status: "publish",
+      status: 'publish',
     };
 
     $.ajax({

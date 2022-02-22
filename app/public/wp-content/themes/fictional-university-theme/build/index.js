@@ -5934,7 +5934,7 @@ class MyNotes {
       //gets the title value user inputed
       content: jquery__WEBPACK_IMPORTED_MODULE_0___default()(".new-note-body").val(),
       //gets the content value user inputed
-      status: "publish"
+      status: 'publish'
     };
     jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
       beforeSend: xhr => {

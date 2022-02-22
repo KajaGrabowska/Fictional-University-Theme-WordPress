@@ -152,6 +152,17 @@ function ourLoginTitle() {
     return get_bloginfo('name');
 }
 
+// Force note posts to be private
+add_filter('wp_insert_post_data', 'makeNotePrivate');
+
+function makeNotePrivate($data) {
+    if ($data['post_type'] == 'note' AND $data['post_status'] != 'trash') {
+        $data['post_status'] = "private";
+    }
+    
+    return $data;
+}
+
 
 //function for google maps API, can't use because I don't want to enter my billing info
 /* function universityMapKey($api) {
