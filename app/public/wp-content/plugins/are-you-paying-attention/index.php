@@ -21,7 +21,7 @@ class AreYouPayingAttention {
     // - 1st argument is the name we're giving to that JS file so that WordPress can identify it
     // -2nd argument is the URL that points to our JS file
     // -3rd argument is the list of dependencies
-    wp_enqueue_script('ournewblocktype', plugin_dir_url(__FILE__) . 'test.js', array('wp-blocks', 'wp-element'));
+    wp_enqueue_script('ournewblocktype', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-blocks', 'wp-element'));
   }
 
 }
