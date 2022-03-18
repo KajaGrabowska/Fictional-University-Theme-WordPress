@@ -8,6 +8,27 @@ import {
   Icon,
 } from "@wordpress/components";
 
+//immidiately invoked function expression 
+(function() { 
+  let locked = false;
+
+  wp.data.subscribe(function() {
+    const results = wp.data.select("core/block-editor").getBlocks().filter(function(block) {
+      return block.name == "ourplugin/are-you-paying-attention" && block.attributes.correctAnswer == undefined
+    });
+
+    if (results.length && locked == false) {
+      locked = true;
+      wp.data.dispatch("core/editor").lockPostSaving("noanswer");
+    }
+
+    if (!results.length && locked) {
+      locked = false;
+      wp.data.dispatch("core/editor").unlockPostSaving("noanswer");
+    }
+  });
+})()
+
 //registerBlockType takes 2 arguments
 // - 1st argument is the short name for our block type
 // - 2nd argument is a configuration object
@@ -18,7 +39,8 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
   category: "common",
   attributes: {
     question: { type: "string" },
-    answers: { type: "arrray", default: ["red", "blue"] },
+    answers: { type: "array", default: [""] },
+    correctAnswer: { type: "number", default: undefined },
   },
   edit: EditComponent,
   save: function (props) {
@@ -32,11 +54,19 @@ function EditComponent(props) {
   }
 
   function deleteAnswer(indexToDelete) {
-    const newAnswers = props.attributes.answers.filter(function(x, index) {
+    const newAnswers = props.attributes.answers.filter(function (x, index) {
       return index != indexToDelete;
-    })
-    props.setAttributes({answers: newAnswers});
-  } 
+    });
+    props.setAttributes({ answers: newAnswers });
+  
+    if (indexToDelete == props.attributes.correctAnswer) {
+      props.setAttributes({ correctAnswer: undefined });
+    }
+  }
+
+  function markAsCorrect(index) {
+    props.setAttributes({ correctAnswer: index });
+  }
 
   return (
     <div className="paying-attention-edit-block">
@@ -51,28 +81,50 @@ function EditComponent(props) {
         return (
           <Flex>
             <FlexBlock>
-              <TextControl value={answer} autoFocus={answer == undefined} onChange={newValue => {
-                const newAnswers = props.attributes.answers.concat([]);
-                newAnswers[index] = newValue;
-                props.setAttributes({answers: newAnswers});
-              }} />
+              <TextControl
+                value={answer}
+                autoFocus={answer == undefined}
+                onChange={(newValue) => {
+                  const newAnswers = props.attributes.answers.concat([]);
+                  newAnswers[index] = newValue;
+                  props.setAttributes({ answers: newAnswers });
+                }}
+              />
             </FlexBlock>
             <FlexItem>
-              <Button>
-                <Icon className="mark-as-correct" icon="star-empty" />
+              <Button onClick={() => markAsCorrect(index)}>
+                <Icon
+                  className="mark-as-correct"
+                  icon={
+                    props.attributes.correctAnswer == index
+                      ? "star-filled"
+                      : "star-empty"
+                  }
+                />
               </Button>
             </FlexItem>
             <FlexItem>
-              <Button isLink className="attention-delete" onClick={() => deleteAnswer(index)}>
+              <Button
+                isLink
+                className="attention-delete"
+                onClick={() => deleteAnswer(index)}
+              >
                 Delete
               </Button>
             </FlexItem>
           </Flex>
         );
       })}
-      <Button isPrimary onClick={() => {
-        props.setAttributes({answers: props.attributes.answers.concat([undefined])})
-      }}>Add another answer</Button>
+      <Button
+        isPrimary
+        onClick={() => {
+          props.setAttributes({
+            answers: props.attributes.answers.concat([undefined]),
+          });
+        }}
+      >
+        Add another answer
+      </Button>
     </div>
   );
 }
