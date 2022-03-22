@@ -42,7 +42,7 @@ function Quiz(props) {
   }
 
   return (
-    <div className="paying-attention-frontend">
+    <div className="paying-attention-frontend" style={{backgroundColor: props.bgColor}}>
       <p>{props.question}</p>
       <ul>
         {props.answers.map(function (answer, index) {
@@ -54,7 +54,7 @@ function Quiz(props) {
                   : "") +
                 (isCorrectDelayed === true && index != props.correctAnswer
                   ? "fade-incorrect"
-                  : "")
+                  : "") 
               }
               onClick={
                 isCorrect === true ? undefined : () => handleAnswer(index)
