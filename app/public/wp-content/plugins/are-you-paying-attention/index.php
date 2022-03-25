@@ -12,7 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class AreYouPayingAttention {
   function __construct() {
+<<<<<<< HEAD
     add_action('init', array($this, 'adminAssets'));
+=======
+    add_action('enqueue_block_editor_assets', array($this, 'adminAssets'));
+>>>>>>> 4dc65e6754e51d7e3e13bc97ee5c169abb6e29f4
   }
 
   function adminAssets() {
@@ -21,6 +25,7 @@ class AreYouPayingAttention {
     // - 1st argument is the name we're giving to that JS file so that WordPress can identify it
     // -2nd argument is the URL that points to our JS file
     // -3rd argument is the list of dependencies
+<<<<<<< HEAD
     wp_register_style('quizeditcss', plugin_dir_url(__FILE__) . 'build/index.css');
     wp_register_script('ournewblocktype', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-blocks', 'wp-element', 'wp-editor'));
     //register_block_type takes 2 arguments
@@ -47,6 +52,9 @@ class AreYouPayingAttention {
     ob_start(); ?>
     <div class="paying-attention-update-me"><pre style="display: none;"><?php echo wp_json_encode($attributes) ?></pre></div> 
     <?php return ob_get_clean();
+=======
+    wp_enqueue_script('ournewblocktype', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-blocks', 'wp-element'));
+>>>>>>> 4dc65e6754e51d7e3e13bc97ee5c169abb6e29f4
   }
 
 }
