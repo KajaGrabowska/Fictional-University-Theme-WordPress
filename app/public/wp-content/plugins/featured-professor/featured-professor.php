@@ -4,6 +4,9 @@
   Plugin Name: Featured Professor Block Type
   Version: 1.0
   Author: Kaja
+  Text Domain: featured-professor
+  Domain Path: /languages
+
 */
 
 if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -41,6 +44,9 @@ class FeaturedProfessor {
   }
 
   function onInit() {
+    //makes the plugin support translations
+    load_plugin_textdomain( 'featured-professor', false, dirname(plugin_basename(__FILE__)) . '/languages');
+
     //1st argument - type of metadata
     //2nd argument - name for the meta
     //3rd argument - an array of options 
@@ -52,6 +58,8 @@ class FeaturedProfessor {
 
     wp_register_script('featuredProfessorScript', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-blocks', 'wp-i18n', 'wp-editor'));
     wp_register_style('featuredProfessorStyle', plugin_dir_url(__FILE__) . 'build/index.css');
+
+    wp_set_script_translations('featuredProfessorScript', 'featured-professor', plugin_dir_path(__FILE__) . '/languages');
 
     register_block_type('ourplugin/featured-professor', array(
       'render_callback' => [$this, 'renderCallback'],
