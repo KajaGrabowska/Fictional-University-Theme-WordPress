@@ -1,5 +1,7 @@
 *.log
-node_modules
+node_modules/
 logs/nginx/error.log
 app/sql/local.sql
 logs/php/error.log
+ai1wm-backups/
+all-in-one-wp-migration/

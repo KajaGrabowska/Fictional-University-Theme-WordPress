@@ -13,7 +13,7 @@ import {
 import {InspectorControls, BlockControls, AlignmentToolbar} from "@wordpress/block-editor";
 import {ChromePicker} from "react-color"; 
 
-//immidiately invoked function expression 
+//immidiately invoked function expression; disables publishing the post if the correct answer isn't chosen in any one of the blocks
 (function() { 
   let locked = false;
 
