@@ -193,6 +193,10 @@ add_filter( 'ai1wm_exclude_themes_from_export', function ( $exclude_filters ) {
   return $exclude_filters;
 } );
 
+add_filter( 'ai1wm_exclude_themes_from_export', function ( $exclude_filters ) {
+    $exclude_filters[] = 'wp-content/plugins/are-you-paying-attention/node_modules';
+    return $exclude_filters;
+  } );
 
 //function for google maps API, can't use because I don't want to enter my billing info
 /* function universityMapKey($api) {
