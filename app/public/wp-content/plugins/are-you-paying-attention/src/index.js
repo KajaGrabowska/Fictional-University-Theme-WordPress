@@ -10,9 +10,9 @@ import {
   PanelRow,
   ColorPicker
 } from "@wordpress/components";
-import {InspectorControls, BlockControls, AlignmentToolbar} from "@wordpress/block-editor";
+import {InspectorControls, BlockControls, AlignmentToolbar, useBlockProps} from "@wordpress/block-editor";
 import {ChromePicker} from "react-color"; 
-
+ 
 //immidiately invoked function expression; disables publishing the post if the correct answer isn't chosen in any one of the blocks
 (function() { 
   let locked = false;
@@ -66,6 +66,11 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
 });
 
 function EditComponent(props) {
+  const blockProps = useBlockProps({
+    className: "paying-attention-edit-block",
+    style: { backgroundColor: props.attributes.bgColor }
+  });
+
   function updateQuestion(value) {
     props.setAttributes({ question: value });
   }
@@ -86,7 +91,7 @@ function EditComponent(props) {
   }
 
   return (
-    <div className="paying-attention-edit-block" style={{backgroundColor: props.attributes.bgColor}}>
+    <div {...blockProps}>
       <BlockControls>
         <AlignmentToolbar value={props.attributes.theAlignment} onChange={chosenAlignment => props.setAttributes({theAlignment: chosenAlignment})} />
       </BlockControls>
